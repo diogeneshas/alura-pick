@@ -1,23 +1,23 @@
 <template>
   <div id="corpo">
-    <h1 class="titulo">{{ titulo }}</h1>
+    <h1 class="centralizado">{{ titulo }}</h1>
     <ul class="lista-fotos">
       <li class="lista-fotos-item" v-for="(foto, index) in fotos" :key="index">
-        <div class="painel">
-          <h2 class="painel-titulo">{{foto.titulo}}</h2>
-          <div class="painel-corpo">
-            <img class="imagem-responsiva" :src="foto.url" :alt="foto.titulo">
-          </div>
-        </div>
+        <meu-painel :titulo="foto.titulo">
+          <img class="imagem-responsiva" :src="foto.url" :alt="foto.titulo">
+        </meu-painel>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-
+import Painel from './components/Painel.vue'
 
 export default {
+  components: {
+    'meu-painel': Painel
+  },
   name: 'App',
   data() {
     return {
