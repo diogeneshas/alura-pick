@@ -1,8 +1,9 @@
 <template>
   <div id="corpo">
     <h1 class="centralizado">{{ titulo }}</h1>
+    <input type="search" class="filtro" placeholder="filtre por parte do titulo" @input="filtro = $event.target.value">
     <ul class="lista-fotos">
-      <li class="lista-fotos-item" v-for="(foto, index) in fotos" :key="index">
+      <li class="lista-fotos-item" v-for="(foto, index) of fotosComFiltro" :key="index">
         <meu-painel :titulo="foto.titulo">
           <img class="imagem-responsiva" :src="foto.url" :alt="foto.titulo">
         </meu-painel>
@@ -22,7 +23,18 @@ export default {
   data() {
     return {
       titulo: 'Alurapic',
-      fotos: []
+      fotos: [],
+      filtro: ''
+    }
+  },
+  computed: {
+    fotosComFiltro() {
+      if (this.filtro) {
+        let exp = new RegExp(this.filtro.trim(), 'i');
+        return this.fotos.filter(foto => exp.test(foto.titulo));
+      } else {
+        return this.fotos;
+      }
     }
   },
   created() {
@@ -77,5 +89,10 @@ export default {
     margin: 0 0 15px 0;
     padding: 10px;
     text-transform: uppercase;
+  }
+
+  .filtro {
+    display: block;
+    width: 100%;
   }
 </style>
