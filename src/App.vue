@@ -5,7 +5,7 @@
     <ul class="lista-fotos">
       <li class="lista-fotos-item" v-for="(foto, index) of fotosComFiltro" :key="index">
         <meu-painel :titulo="foto.titulo">
-          <img class="imagem-responsiva" :src="foto.url" :alt="foto.titulo">
+          <imagem-responsiva :url="foto.url" :titulo="foto.titulo"></imagem-responsiva>
         </meu-painel>
       </li>
     </ul>
@@ -14,10 +14,12 @@
 
 <script>
 import Painel from './components/Painel.vue'
+import ImagemResponsiva from './components/ImagemResponsiva.vue'
 
 export default {
   components: {
-    'meu-painel': Painel
+    'meu-painel': Painel,
+    'imagem-responsiva': ImagemResponsiva
   },
   name: 'App',
   data() {
@@ -64,9 +66,7 @@ export default {
     display: inline-block;
   }
 
-  .imagem-responsiva {
-    width: 100%;
-  }
+  
 
   /* estilo do painel */ 
 
