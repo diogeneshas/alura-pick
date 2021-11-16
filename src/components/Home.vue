@@ -6,6 +6,7 @@
       <li class="lista-fotos-item" v-for="(foto, index) of fotosComFiltro" :key="index">
         <meu-painel :titulo="foto.titulo">
           <imagem-responsiva :url="foto.url" :titulo="foto.titulo"></imagem-responsiva>
+          <meu-botao tipo="button" rotulo="REMOVER" @botaoAtivado="remove(foto)" confirmacao="false"></meu-botao>
         </meu-painel>
       </li>
     </ul>
@@ -15,11 +16,13 @@
 <script>
 import Painel from './Painel.vue'
 import ImagemResponsiva from './ImagemResponsiva.vue'
+import Botao from './Botao.vue'
 
 export default {
   components: {
     'meu-painel': Painel,
-    'imagem-responsiva': ImagemResponsiva
+    'imagem-responsiva': ImagemResponsiva,
+    'meu-botao': Botao
   },
   name: 'App',
   data() {
@@ -43,6 +46,13 @@ export default {
     this.$http.get('http://localhost:3000/v1/fotos')
       .then(res => res.json())
       .then(fotos => this.fotos = fotos, err => console.log(err))
+  },
+  methods: {
+    remove(foto) {
+
+      
+        alert('remover a foto' + foto.titulo  )
+    }
   }
 }
 </script>
