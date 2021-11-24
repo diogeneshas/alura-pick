@@ -46,21 +46,40 @@ export default {
     }
   },
   created() {
-    this.$http.get('v1/fotos')
-      .then(res => res.json())
-      .then(fotos => this.fotos = fotos, err => console.log(err))
+
+    // Usando $resource
+    this.resource = this.$resource('v1/fotos{/id}')
+    this.resource.query().then(res => res.json()).then(fotos => this.fotos = fotos, err => console.log(err))
+
+
+    // Usando $http
+    // this.$http.get('v1/fotos')
+    //   .then(res => res.json())
+    //   .then(fotos => this.fotos = fotos, err => console.log(err))
   },
   methods: {
     remove(foto) {
-      this.$http.delete(`v1/fotos/${foto._id}`)
-      .then(()=> {
+
+      //Usando $resource
+      this.resource.delete({id: foto._id}).then(() => {
         let indice = this.fotos.indexOf(foto)
         this.fotos.splice(indice, 1)
         this.mensagem = 'Foto removida com sucesso'
-        }, err => {
+      }, err => {
         console.log(err)
         this.mensagem = 'Nao foi possivel remover a foto'
       })
+
+      // Usando $http
+      // this.$http.delete(`v1/fotos/${foto._id}`)
+      // .then(()=> {
+      //   let indice = this.fotos.indexOf(foto)
+      //   this.fotos.splice(indice, 1)
+      //   this.mensagem = 'Foto removida com sucesso'
+      //   }, err => {
+      //   console.log(err)
+      //   this.mensagem = 'Nao foi possivel remover a foto'
+      // })
     }
   }
 }
